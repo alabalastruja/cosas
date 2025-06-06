@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #0056b3;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+    max-height: 80vh;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input, form select, form textarea, form button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.fecha-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.fecha-container label {
+    margin-right: 5px;
+}
+
+.fecha-container input {
+    width: 60px;
+}
+
+/* Estilo mejorado para el campo de concepto */
+form textarea {
+    width: 100%;
+    min-height: 100px; /* Puedes ajustar este valor */
+    resize: vertical; /* Permite redimensionar solo en la dirección vertical */
+    box-sizing: border-box; /* Asegura que el padding no se desborde */
+}
