@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imprimir Recibo</title>
+    <link rel="stylesheet" href="imprimir.css">
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.0/jspdf.umd.min.js"></script>
+    <div class="container">
+        <p><span id="recibo-id" hidden></span></p>
+
+        <div class="info">
+            <p><span id="recibo-dia"></span>    <span id="recibo-mes"></span>     <span id="recibo-anio"></span></p>
+            <p><span id="recibo-moneda"></span></p>
+            <p><span id="recibo-monto"></span></p>
+        </div>
+        <div class="contenido">
+            <p><span id="recibo-nombre"></span></p>
+            <p><span id="recibo-moneda-nombre"></span> <span id="recibo-monto-letra"></span></p>
+            <p><span id="recibo-concepto"></span></p>
+        </div>
+        <div class="banco-info">
+            <p><span id="recibo-metodo-pago"></span></p>
+            <p><span id="recibo-banco"></span></p>
+        </div>
+
+        <button id="btn-imprimir">Descargar Recibo (PDF)</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const reciboId = params.get("id");
+
+            if (!reciboId) {
+                alert("ID de recibo no encontrado.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost/fuv.org.uy/andrei/FUV/php/imprimir.php?id=${reciboId}`);
+                if (!response.ok) throw new Error("Error al obtener los datos del recibo");
+
+                const recibos = await response.json();
+                console.log("Recibo cargado:", recibos);
+
+                if (!recibos || Object.keys(recibos).length === 0) {
+                    alert("Recibo no encontrado.");
+                    return;
+                }
+
+                document.getElementById("recibo-id").textContent = recibos.id;
+                document.getElementById("recibo-nombre").textContent = recibos.nombre;
+                document.getElementById("recibo-moneda").textContent = recibos.moneda;
+                document.getElementById("recibo-moneda-nombre").textContent = recibos.moneda_nombre;
+                document.getElementById("recibo-monto").textContent = recibos.monto;
+                document.getElementById("recibo-monto-letra").textContent = recibos.monto_letra;
+                document.getElementById("recibo-concepto").textContent = recibos.concepto;
+                document.getElementById("recibo-banco").textContent = recibos.banco;
+                document.getElementById("recibo-dia").textContent = recibos.dia;
+                document.getElementById("recibo-mes").textContent = recibos.mes;
+                document.getElementById("recibo-anio").textContent = recibos.anio;
+                document.getElementById("recibo-metodo-pago").textContent = recibos.metodo_pago;
+
+                document.getElementById("btn-imprimir").addEventListener("click", async () => {
+                    try {
+                        // Actualizar el estado del recibo a "Emitido"
+                        const updateResponse = await fetch(`http://localhost/fuv.org.uy/andrei/FUV/php/estado.php`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                id: recibos.id,
+                                estado: 'Emitido', // Cambiar el estado del recibo
+                            }),
+                        });
+
+                        if (!updateResponse.ok) {
+                            throw new Error('Error al actualizar el estado del recibo');
+                        }
+
+                        // Redirigir a la URL de generación del PDF
+                        window.location.href = `http://localhost/fuv.org.uy/andrei/FUV/php/generar_pdf.php?id=${recibos.id}`;
+                    } catch (error) {
+                        console.error("Error al actualizar el estado:", error);
+                        alert("Hubo un problema al actualizar el estado del recibo.");
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error al cargar el recibo:", error);
+                alert("Hubo un problema al cargar el recibo.");
+            }
+        });
+    </script>
+</body>
+</html>

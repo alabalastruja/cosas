@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            background-color: #f8f8f8;
+            padding: 40px;
+        }
+
+        .documento {
+            background: white;
+            padding: 40px;
+            width: 700px;
+            margin: auto;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            white-space: pre-line;
+            font-size: 16px;
+        }
+
+        .monto {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 5px;
+        }
+
+        .fecha {
+            margin-right: 150px;
+        }
+
+        .moneda {
+            margin-right: 150px;
+        }
+
+        .contenido {
+            line-height: 1.8;
+        }
+
+        .banco-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .metodo {
+            margin-right: 150px;
+            flex: 1;
+            text-align: right;
+            padding-right: 20px; /* Espaciado entre "Transferencia" y "HSBC" */
+        }
+
+        .banco {
+            margin-left: 150px;
+            flex: 1;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="documento">
+    <div class="monto">
+        <div class="fecha">17  01  2024</div>
+        <div class="moneda">CHF</div>
+        <div class="monto">6,000.00</div>
+    </div>
+
+    <div class="contenido">
+        F.I.V.B.  
+        Francos Suizos Seis mil  
+        Apoyo a selecciones Beach  
+        AppBased 2022  
+        Juan Cartagena  
+    </div>
+
+    <div class="banco-info">
+        <div class="metodo">Transferencia</div>
+        <div class="banco">HSBC</div>
+    </div>
+</div>
+
+</body>
+</html>
